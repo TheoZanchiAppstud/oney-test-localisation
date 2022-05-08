@@ -6,7 +6,8 @@
  * @flow strict-local
  */
 
-import React, {useContext} from 'react';
+import React, {useContext, Suspense} from 'react';
+import {useTranslation} from 'react-i18next';
 import {
   SafeAreaView,
   ScrollView,
@@ -18,13 +19,23 @@ import {
 } from 'react-native';
 
 import {Colors, Header} from 'react-native/Libraries/NewAppScreen';
+import {translations} from './src/localization/PhraseTranslation';
 import {
   LocalizationContext,
   LocalizationProvider,
 } from './src/localization/Translation';
 
 const App = () => {
-  const {translations} = useContext(LocalizationContext);
+  return (
+    <Suspense fallback={<Text>Loading... </Text>}>
+      <AppSync />
+    </Suspense>
+  );
+};
+
+const AppSync = () => {
+  const {t} = useTranslation();
+
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -32,7 +43,7 @@ const App = () => {
   };
 
   return (
-    <LocalizationProvider>
+    <Suspense fallback={<></>}>
       <SafeAreaView style={backgroundStyle}>
         <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
         <ScrollView
@@ -43,17 +54,17 @@ const App = () => {
             style={{
               backgroundColor: isDarkMode ? Colors.black : Colors.white,
             }}>
-            <Text>{translations['home.hello']}</Text>
-            <Text>{translations['home.next']}</Text>
+            <Text>{t('home.hello')}</Text>
+            <Text>{t('home.next')}</Text>
             <Text>
-              {translations.formatString(translations['home.date'], {
+              {t('home.date', {
                 date: new Date().toISOString(),
               })}
             </Text>
           </View>
         </ScrollView>
       </SafeAreaView>
-    </LocalizationProvider>
+    </Suspense>
   );
 };
 
