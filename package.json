@@ -1,6 +1,6 @@
 {
   "name": "testlokalise",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
@@ -11,21 +11,33 @@
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
+    "i18next": "^21.6.16",
+    "i18next-chained-backend": "^3.0.2",
+    "i18next-resources-to-backend": "^1.0.0",
+    "lodash.merge": "^4.6.2",
     "react": "17.0.2",
+    "react-i18next": "^11.16.7",
     "react-native": "0.65.1",
     "react-native-localization": "^2.3.1",
-    "react-native-localize": "^2.2.1"
+    "react-native-localize": "^2.2.1",
+    "react-native-phrase-sdk": "^1.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@types/jest": "^27.5.1",
+    "@types/lodash.merge": "^4.6.7",
+    "@types/react": "^18.0.10",
+    "@types/react-native": "^0.67.7",
+    "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^26.6.3",
     "eslint": "7.14.0",
     "jest": "^26.6.3",
     "metro-react-native-babel-preset": "^0.66.0",
     "react-native-codegen": "^0.0.7",
-    "react-test-renderer": "17.0.2"
+    "react-test-renderer": "17.0.2",
+    "typescript": "^4.7.2"
   },
   "jest": {
     "preset": "react-native"
