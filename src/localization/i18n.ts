@@ -1,7 +1,7 @@
 import i18n, {Resource} from 'i18next';
 import {initReactI18next} from 'react-i18next';
-import translationEN from './en.json';
-import translationFR from './fr.json';
+import translationEN from './locales/en.json';
+import translationFR from './locales/fr.json';
 import lokaliseTranslationEN from './en_lokalise.json';
 import lokaliseTranslationFR from './fr_lokalise.json';
 import merge from 'lodash.merge';
