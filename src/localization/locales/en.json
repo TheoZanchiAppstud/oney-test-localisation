@@ -4,7 +4,7 @@
         "next": "Next step",
         "date": "Today is the {{date}}",
         "localText": "Text found only in local resources",
-        "addedFromLokalise": "Text added from Lokalise web app"
-    },
-    "addedFromLokalise2": "addedFromLokalise2"
+        "addedFromLokalise": "Text added from Lokalise web app",
+        "addedFromLokalise2": "addedFromLokalise2"
+    }
 }
