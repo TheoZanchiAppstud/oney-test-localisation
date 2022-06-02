@@ -2,6 +2,7 @@
   "home": {
     "hello": "Bonjour, bon retour parmi nous",
     "next": "Étape suivante",
-    "date": "Nous sommes le {{date}}"
+    "date": "Nous sommes le {{date}}",
+    "localText": "Texte seulement disponible dans les resources locales"
   }
 }
