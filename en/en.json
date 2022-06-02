@@ -1,8 +1,0 @@
-{
-    "home": {
-        "hello": "Hello good to see you again",
-        "next": "Next step",
-        "date": "Today is the {{date}}",
-        "localText": "Text found only in local resources"
-    }
-}
