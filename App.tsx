@@ -48,6 +48,7 @@ const App: React.FC = () => {
           </Text>
           <Text>{t('home.localText')}</Text>
           <Text>{t('home.addedFromLokalise')}</Text>
+          <Text>{t('home.addedFromLokalise2')}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
