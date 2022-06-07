@@ -1,0 +1,113 @@
+diff --git a/node_modules/i18next/index.d.ts b/node_modules/i18next/index.d.ts
+index f32334a..6a53fbe 100644
+--- a/node_modules/i18next/index.d.ts
++++ b/node_modules/i18next/index.d.ts
+@@ -5,6 +5,11 @@ export interface FallbackLngObjList {
+   [language: string]: readonly string[];
+ }
+ 
++/**
++ * Augment this with a 'keys' key where you can add all the available translation keys
++ */
++ export interface I18nTranslationKeys {}
++
+ export type FallbackLng =
+   | string
+   | readonly string[]
+@@ -684,11 +689,86 @@ export interface WithT {
+ 
+ export type TFunctionResult = string | object | Array<string | object> | undefined | null;
+ export type TFunctionKeys = string | TemplateStringsArray;
++
++// ------------------------------------------------------------------ Used to strong type i18next
++/**
++ * Gets the defined translation keys if they have been overridden, 'string' type otherwise
++ */
++ type DefaultResources = I18nTranslationKeys['resources']
++ type DefaultNamespace<T = I18nTranslationKeys['defaultNS']> = T extends Fallback<string> ? T : string;
++
++type Fallback<F, T = keyof DefaultResources> = [T] extends [never] ? F : T;
++
++export type Namespace<F = Fallback<string>> = F | F[];
++
++type PluralSuffix = 'zero' | 'one' | 'two' | 'few' | 'many' | 'other';
++
++type WithOrWithoutPlural<K> =  K extends `${infer B}_${PluralSuffix}`
++    ? B | K
++    : K
++
++// Normalize single namespace
++export type KeysWithSeparator<K1, K2, S extends string = '.'> = `${K1 &
++  string}${S}${K2 & string}`;
++type KeysWithSeparator2<K1, K2> = KeysWithSeparator<K1, Exclude<K2, keyof any[]>>;
++type Normalize2<T, K = keyof T> = K extends keyof T
++  ? T[K] extends Record<string, any>
++    ? T[K] extends readonly any[]
++      ?
++          | KeysWithSeparator2<K, WithOrWithoutPlural<keyof T[K]>>
++          | KeysWithSeparator2<K, Normalize2<T[K]>>
++      :
++          | KeysWithSeparator<K, WithOrWithoutPlural<keyof T[K]>>
++          | KeysWithSeparator<K, Normalize2<T[K]>>
++    : never
++  : never;
++type Normalize<T> = WithOrWithoutPlural<keyof T> | Normalize2<T>;
++
++// Normalize multiple namespaces
++type KeyWithNSSeparator<N, K, S extends string = '.'> = `${N &
++  string}${S}${K & string}`;
++type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends (k: infer I) => void
++  ? I
++  : never;
++type LastOf<T> = UnionToIntersection<T extends any ? () => T : never> extends () => infer R
++  ? R
++  : never;
++type NormalizeMulti<T, U extends keyof T, L = LastOf<U>> = L extends U
++  ? KeyWithNSSeparator<L, Normalize<T[L]>> | NormalizeMulti<T, Exclude<U, L>>
++  : never;
++
++type NormalizeWithKeyPrefix<
++  T,
++  K,
++  S extends string = '.'
++> = K extends `${infer K1}${S}${infer K2}`
++  ? K1 extends keyof T
++    ? NormalizeWithKeyPrefix<T[K1], K2>
++    : never
++  : K extends keyof T
++  ? T[K] extends string
++    ? never
++    : Normalize<T[K]>
++  : never;
++
++export type TFuncKey<
++  N extends Namespace = DefaultNamespace,
++  TKPrefix = undefined,
++  T = DefaultResources
++> = N extends (keyof T)[] | Readonly<(keyof T)[]>
++  ? NormalizeMulti<T, N[number]>
++  : N extends keyof T
++  ? TKPrefix extends undefined
++    ? Normalize<T[N]>
++    : NormalizeWithKeyPrefix<T[N], TKPrefix>
++  : string;
++// ------------------------------------------------------------------ Used to strong type i18next
++
+ export interface TFunction {
+   // basic usage
+   <
+     TResult extends TFunctionResult = string,
+-    TKeys extends TFunctionKeys = string,
++    TKeys extends TFuncKey = TFuncKey,
+     TInterpolationMap extends object = StringMap,
+   >(
+     key: TKeys | TKeys[],
+@@ -697,7 +777,7 @@ export interface TFunction {
+   // overloaded usage
+   <
+     TResult extends TFunctionResult = string,
+-    TKeys extends TFunctionKeys = string,
++    TKeys extends TFuncKey = TFuncKey,
+     TInterpolationMap extends object = StringMap,
+   >(
+     key: TKeys | TKeys[],

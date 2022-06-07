@@ -1,8 +1,0 @@
-{
-  "home": {
-    "hello": "Hello from the lokalise resources",
-    "next": "Next step",
-    "date": "Today is the {{date}}",
-    "lokaliseText": "Text only in lokalise resrouces"
-  }
-}

@@ -7,7 +7,8 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@react-native-community/async-storage": "^1.12.1",
@@ -15,6 +16,7 @@
     "i18next-chained-backend": "^3.0.2",
     "i18next-resources-to-backend": "^1.0.0",
     "lodash.merge": "^4.6.2",
+    "patch-package": "^6.4.7",
     "react": "17.0.2",
     "react-i18next": "^11.16.7",
     "react-native": "0.65.1",

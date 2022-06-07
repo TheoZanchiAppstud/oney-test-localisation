@@ -6,8 +6,9 @@
  * @flow strict-local
  */
 
+import i18next from 'i18next';
 import React from 'react';
-import {useTranslation} from 'react-i18next';
+import {I18nextProvider} from 'react-i18next';
 import {
   SafeAreaView,
   ScrollView,
@@ -19,15 +20,16 @@ import {
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {i18n} from './src/localization/i18n';
 
 const App: React.FC = () => {
-  const {t} = useTranslation();
-
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
+
+  const fs = () => {};
 
   return (
     <SafeAreaView style={backgroundStyle}>
@@ -39,16 +41,12 @@ const App: React.FC = () => {
           style={{
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
-          <Text>{t('home.hello')}</Text>
-          <Text>{t('home.next')}</Text>
-          <Text>
-            {t('home.date', {
-              date: new Date().toISOString(),
-            })}
-          </Text>
-          <Text>{t('home.localText')}</Text>
-          <Text>{t('home.addedFromLokalise')}</Text>
-          <Text>{t('home.addedFromLokalise2')}</Text>
+          <Text>{i18n().home.hello}</Text>
+          <Text>{i18n().home.next}</Text>
+          <Text>{i18n().home.date(new Date().toISOString())}</Text>
+          <Text>{i18n().home.localText}</Text>
+          <Text>{i18n().home.addedFromLokalise}</Text>
+          <Text>{i18n().home.addedFromLokalise2}</Text>
         </View>
       </ScrollView>
     </SafeAreaView>
