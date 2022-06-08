@@ -1,8 +1,8 @@
 {
     "home": {
-        "hello": "Bonjour, bon retour parmi nous",
+        "hello": "Bonjour depuis le portail web lokalise",
         "next": "Étape suivante",
-        "date": "Nous sommes le {{date}}",
+        "date": "Date : {{date}}",
         "localText": "Texte seulement disponible dans les ressources locales",
         "addedFromLokalise": "Texte ajouté depuis le portail web Lokalise",
         "addedFromLokalise2": "addedFromLokalise2"
